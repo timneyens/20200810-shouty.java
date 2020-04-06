@@ -1,11 +1,13 @@
 package shouty;
 
 import cucumber.api.java.en.Given;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class LocationSteps {
-    private final Shouty shouty = new Shouty();
+    @Autowired
+    private Shouty shouty;
 
     @Given("{word} is at {int}, {int}")
     public void user_is_at(String name, int xCoord, int yCoord) {
