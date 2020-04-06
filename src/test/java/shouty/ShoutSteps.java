@@ -6,6 +6,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static junit.framework.TestCase.assertFalse;
@@ -48,5 +49,12 @@ public class ShoutSteps {
     @Then("Lucy should hear nothing")
     public void lucy_should_hear_nothing() {
         assertEquals(emptyMap(), shouty.getShoutsHeardBy("Lucy"));
+    }
+
+    @Then("Lucy should hear {int} shouts from Sean")
+    public void lucyShouldHearShoutsFromSean(int expectedNumberOfShouts) {
+        Map<String, List<String>> shoutsHeard = shouty.getShoutsHeardBy("Lucy");
+        List<String> shoutsByShouter = shoutsHeard.get("Sean");
+        assertEquals(expectedNumberOfShouts, shoutsByShouter.size());
     }
 }
