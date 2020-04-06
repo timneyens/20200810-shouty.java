@@ -4,10 +4,8 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.cucumber.datatable.DataTable;
 
 import java.util.List;
-import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static junit.framework.TestCase.assertFalse;
@@ -24,13 +22,11 @@ public class ShoutSteps {
     }
 
     @Given("people are located at")
-    public void peopleAreLocatedAt(DataTable personLocations) {
+    public void peopleAreLocatedAt(List<PersonLocation> personLocations) {
 
-        for (Map<String, String> personLocation: personLocations.asMaps()){
-            shouty.setLocation(personLocation.get("name"),
-                    new Coordinate(
-                            Integer.parseInt(personLocation.get("x")),
-                            Integer.parseInt(personLocation.get("y"))));
+        for (PersonLocation personLocation: personLocations){
+            shouty.setLocation(personLocation.name,
+                    new Coordinate(personLocation.x, personLocation.y));
         }
     }
 
