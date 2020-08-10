@@ -1,42 +1,42 @@
 package shouty;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import static java.util.Collections.emptyMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 
 public class ShoutSteps {
-    private static final String ARBITRARY_MESSAGE = "Hello, world";
-    private final Shouty shouty = new Shouty();
+    @Autowired
+    private ShoutyHelper shouty;
 
-    @Given("{word} is at {int}, {int}")
-    public void person_is_at(String person, int xCoord, int yCoord) {
-        shouty.setLocation(person, new Coordinate(xCoord, yCoord));
-    }
+    private static final String ARBITRARY_MESSAGE = "Hello, world";
 
     @When("{word} shouts")
-    public void person_shouts(String person) {
+    public void shouter_shouts(String person) {
         shouty.shout(person, ARBITRARY_MESSAGE);
     }
 
-    @Then("Lucy should hear Sean")
-    public void lucy_should_hear_sean() {
-        assertEquals(1, shouty.getShoutsHeardBy("Lucy").size());
+    @Then("{word} should hear {word}")
+    public void listener_should_hear_shouter(String listener, String shouter) {
+        Map<String, List<String>> shouts = shouty.getShoutsHeardBy(listener);
+        assertEquals(true, shouts.containsKey(shouter));
     }
 
-    @Then("Lucy should hear nothing")
-    public void lucy_should_hear_nothing() {
-        assertEquals(emptyMap(), shouty.getShoutsHeardBy("Lucy"));
+    @Then("{word} should not hear {word}")
+    public void listener_should_not_hear_shouter(String listener, String shouter) {
+        Map<String, List<String>> shouts = shouty.getShoutsHeardBy(listener);
+        assertEquals(false, shouts.containsKey(shouter));
     }
 
-    @Then("Lucy should not hear Oscar")
-    public void lucy_should_not_hear_oscar() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new RuntimeException("bad step");
+    @Then("{word} should hear {int} shouts from {word}")
+    public void listener_should_hear_shouts_from_shouter(String listener, int shouts, String shouter) {
+        Map<String, List<String>> shoutedMessages = shouty.getShoutsHeardBy(listener);
+        assertEquals(shouts, shoutedMessages.get(shouter).size());
     }
 
 }
