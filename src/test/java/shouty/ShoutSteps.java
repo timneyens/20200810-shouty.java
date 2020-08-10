@@ -12,14 +12,9 @@ public class ShoutSteps {
     private static final String ARBITRARY_MESSAGE = "Hello, world";
     private final Shouty shouty = new Shouty();
 
-    @Given("Lucy is at {int}, {int}")
-    public void lucy_is_at(int xCoord, int yCoord) {
-        shouty.setLocation("Lucy", new Coordinate(xCoord, yCoord));
-    }
-
-    @Given("Sean is at {int}, {int}")
-    public void sean_is_at(int xCoord, int yCoord) {
-        shouty.setLocation("Sean", new Coordinate(xCoord, yCoord));
+    @Given("{word} is at {int}, {int}")
+    public void person_is_at(String person, int xCoord, int yCoord) {
+        shouty.setLocation(person, new Coordinate(xCoord, yCoord));
     }
 
     @When("Sean shouts")
@@ -36,4 +31,17 @@ public class ShoutSteps {
     public void lucy_should_hear_nothing() {
         assertEquals(emptyMap(), shouty.getShoutsHeardBy("Lucy"));
     }
+
+    @When("Oscar shouts")
+    public void oscarShouts() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("Lucy should not hear Oscar")
+    public void lucyShouldNotHearOscar() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }
