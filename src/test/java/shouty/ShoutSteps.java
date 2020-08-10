@@ -1,5 +1,6 @@
 package shouty;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -17,9 +18,9 @@ public class ShoutSteps {
         shouty.setLocation(person, new Coordinate(xCoord, yCoord));
     }
 
-    @When("Sean shouts")
-    public void sean_shouts() {
-        shouty.shout("Sean", ARBITRARY_MESSAGE);
+    @When("{word} shouts")
+    public void person_shouts(String person) {
+        shouty.shout(person, ARBITRARY_MESSAGE);
     }
 
     @Then("Lucy should hear Sean")
@@ -32,16 +33,10 @@ public class ShoutSteps {
         assertEquals(emptyMap(), shouty.getShoutsHeardBy("Lucy"));
     }
 
-    @When("Oscar shouts")
-    public void oscarShouts() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
     @Then("Lucy should not hear Oscar")
-    public void lucyShouldNotHearOscar() {
+    public void lucy_should_not_hear_oscar() {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        throw new RuntimeException("bad step");
     }
 
 }
